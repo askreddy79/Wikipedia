@@ -2,7 +2,9 @@ package com.wp.offer.Wikipedia.api.rest;
 
 import com.wp.offer.Wikipedia.Exception.DataFormatException;
 import com.wp.offer.Wikipedia.Exception.ResourceNotFoundException;
+import com.wp.offer.Wikipedia.Exception.ViolationException;
 import com.wp.offer.Wikipedia.domain.RestErrorInfo;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextAware;
@@ -59,6 +61,22 @@ public abstract class AbstractRestHandler implements ApplicationEventPublisherAw
         }
         return resource;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ViolationException.class)
+    public
+    @ResponseBody
+    RestErrorInfo handleConstraintViolationException(ViolationException ex, WebRequest request, HttpServletResponse response) {
+        log.info("Unique constraint violation Exception handler:" + ex.getMessage());
+        return new RestErrorInfo(ex, "Sorry there is already same offer existed");
+    }
+
+//    public static <T> T handleConstraintViolationException(final T constraint) {
+//        if (constraint == null) {
+//            throw new ViolationException("unique constraint violation");
+//        }
+//        return constraint;
+//    }
 
 
 }

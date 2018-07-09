@@ -1,7 +1,7 @@
 package com.wp.offer.Wikipedia.Exception;
 
 /**
- * for HTTP errors
+ * for unavialble resources errors
  * Created by suneel on 03/07/2018.
  */
 public class ResourceNotFoundException extends RuntimeException {

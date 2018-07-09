@@ -37,29 +37,29 @@ public class WikipediaApplicationTests {
 	@Test
 	public void createRetrieveAndDeleteOffer() {
 		//System.setProperty("proxyPort", "8090");
-
+		//create an offer
 		WikiOffer r1 = mockOffer("shouldCreateRetrieveDelete",new Random().nextInt());
 		//restTemplate.put("http://localhost:" + port + "/wiki/v1/offers",r1);
 		restTemplate.postForEntity("http://localhost:" + port +"/wiki/v1/offers", r1, WikiOffer.class);
+
+		//retrieve the created offer
 		ResponseEntity<WikiOffer> response = restTemplate.getForEntity("http://localhost:" + port + "/wiki/v1/offers/" + r1.getId(), WikiOffer.class, "");
 		Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 		Assert.assertEquals(r1.getName(),response.getBody().getName());
 
-		//delete
 		String url = "http://localhost:" + port + "/wiki/v1/offers/{id}";
 		long id = r1.getId();
 		// delete
 
-		//restTemplate.delete("http://localhost:" + port + "/wiki/v1/offers/{id}",r1.getId());
+		//delete the created Offer
 		ResponseEntity<WikiOffer> delResponse = restTemplate.exchange(url,
 				HttpMethod.DELETE,
 				HttpEntity.EMPTY,
 				WikiOffer.class,
 				id);
 
-		Assert.assertEquals(delResponse.getStatusCode(), HttpStatus.NO_CONTENT);
-				//restTemplate.getForEntity("http://localhost:" + port + "/wiki/v1/offers/" + r1.getId(), WikiOffer.class, "");
-		//Assert.assertNull(delResponse.getBody());
+		Assert.assertEquals(delResponse.getBody().getId(), 0);
+		Assert.assertEquals(delResponse.getBody().getName(),null);
 
 	}
 

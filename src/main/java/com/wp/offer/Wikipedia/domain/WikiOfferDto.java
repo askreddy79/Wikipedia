@@ -2,32 +2,14 @@ package com.wp.offer.Wikipedia.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
- * Created by suneel on 03/07/2018.
+ * Created by suneel on 05/07/2018.
  */
-@Entity
-@Table(name = "wikioffer",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class WikiOffer {
-
-    @Id
-    //@GeneratedValue()
+public class WikiOfferDto {
     private long id;
-
-
-    @Column(nullable = false)
     private String name;
-
-    public WikiOffer() {
-    }
-
     private String description;
     private double price;
     private String currency;
@@ -35,8 +17,12 @@ public class WikiOffer {
     private Date offerStartDate;
     private int daysValid;
     private String offerStatus;
+    private String offerStatusMsg;
 
-    public WikiOffer(long id, String name, String description, double price, String currency, Date offerStartDate, int daysValid, String offerStatus) {
+    public WikiOfferDto() {
+    }
+
+    public WikiOfferDto(long id, String name, String description, double price, String currency, Date offerStartDate, int daysValid, String offerStatus, String offerStatusMsg) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,6 +31,7 @@ public class WikiOffer {
         this.offerStartDate = offerStartDate;
         this.daysValid = daysValid;
         this.offerStatus = offerStatus;
+        this.offerStatusMsg = offerStatusMsg;
     }
 
 
@@ -96,6 +83,13 @@ public class WikiOffer {
         this.offerStartDate = offerStartDate;
     }
 
+    public int getDaysValid() {
+        return daysValid;
+    }
+
+    public void setDaysValid(int daysValid) {
+        this.daysValid = daysValid;
+    }
 
     public String getOfferStatus() {
         return offerStatus;
@@ -105,12 +99,12 @@ public class WikiOffer {
         this.offerStatus = offerStatus;
     }
 
-    public int getDaysValid() {
-        return daysValid;
+    public void setOfferStatusMsg(String offerStatusMsg) {
+        this.offerStatusMsg = offerStatusMsg;
     }
 
-    public void setDaysValid(int daysValid) {
-        this.daysValid = daysValid;
+    public String getOfferStatusMsg() {
+        return offerStatusMsg;
     }
 
 
